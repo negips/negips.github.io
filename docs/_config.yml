@@ -31,7 +31,7 @@ twitter_username: pokushocus
 github_username:  negips
 
 # Build settings
-theme: minima
+theme: Architect
 plugins:
   - jekyll-feed
 
