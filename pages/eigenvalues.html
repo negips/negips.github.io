@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Generic - Hyperspace by HTML5 UP</title>
+		<title>Eigenvalue Algorithms</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/assets/css/main.css" />
@@ -16,12 +16,14 @@
 
 		<!-- Header -->
 			<header id="header">
-				<a href="/index.html" class="title">Hyperspace</a>
+				<a href="/index.html#two" class="title">Ongoing Projects</a>
 				<nav>
 					<ul>
 						<li><a href="/index.html">Home</a></li>
-						<li><a href="/generic.html" class="active">Generic</a></li>
+						<!--
+						<li><a href="/pages/eigenvalues.html" class="active">Eigenvalue Algorithms</a></li>
 						<li><a href="/elements.html">Elements</a></li>
+						-->
 					</ul>
 				</nav>
 			</header>
@@ -32,10 +34,22 @@
 				<!-- Main -->
 					<section id="main" class="wrapper">
 						<div class="inner">
-							<h1 class="major">A Generic Page</h1>
-							<span class="image fit"><img src="/images/pic04.jpg" alt="" /></span>
-							<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-							<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+							<h1 class="major">Arnoldi or Lanczos?</h1>
+							<!-- <span class="image fit"><img src="/images/pic04.jpg" alt="" /></span> -->
+							<p>The Arnoldi method is the workhorse of scientific libraries dedicated to calculating a few eigenvalues of large systems.
+								The ARPACK (Arnoldi Package) library is a prime example. For a given matrix A, the Arnoldi method generates a sequence of orthogonal vectors 
+								\(\{u_{1},u_{2},\ldots,u_{m}\}\) which form a basis for a Krylov subspace \(\mathcal{K} \equiv \{u_{1},Au_{1},A^{2}u_{1},\ldots,A^{m-1}u_{1}\}\). 
+								This can be written as
+								\begin{eqnarray}
+								AU_{m} = U_{m}H + \beta u_{m+1}e_{m}^{T}, \\
+								U_{m}^{T}U_{m} = I_{m},
+								\end{eqnarray}
+								where, \(U_{m} \) is the matrix of the m orthogonal vectors spanning the Krylov subspace \(\mathcal{K}\). Obviously one gets a reduced matrix,
+								\begin{eqnarray}
+								U_{m}^{T}AU_{m} = H,
+								\end{eqnarray}
+								so that the Hessenberg matrix \(H\) is the orthogonal reduction of \(A\) on to the subspace \(\mathcal{K}\). 
+							</p>
 						</div>
 					</section>
 
@@ -61,5 +75,8 @@
 			<!-- Mathjax scripts-->
 			<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 			<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+			
+
+
 	</body>
 </html>
