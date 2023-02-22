@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Eigenvalue Algorithms</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="/index.html#two" class="title">Ongoing Projects</a>
+				<nav>
+					<ul>
+						<li><a href="/index.html">Home</a></li>
+						<!--
+						<li><a href="/pages/eigenvalues.html" class="active">Eigenvalue Algorithms</a></li>
+						<li><a href="/elements.html">Elements</a></li>
+						-->
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Arnoldi or Lanczos?</h1>
+							<!-- <span class="image fit"><img src="/images/pic04.jpg" alt="" /></span> -->
+							<p>The Arnoldi method is the workhorse of scientific libraries dedicated to calculating a few eigenvalues of large systems.
+								The ARPACK (Arnoldi Package) library is a prime example. For a given matrix A, the Arnoldi method generates a sequence of orthogonal vectors 
+								\(\{u_{1},u_{2},\ldots,u_{m}\}\) which form a basis for a Krylov subspace \(\mathcal{K} \equiv \{u_{1},Au_{1},A^{2}u_{1},\ldots,A^{m-1}u_{1}\}\). 
+								This can be written as
+								\begin{eqnarray}
+								AU_{m} = U_{m}H + \beta u_{m+1}e_{m}^{T}, \\
+									U_{m}^{T}U_{m} = I_{m},
+								\end{eqnarray}
+								where, \(U_{m} \) is the matrix of the m orthogonal vectors spanning the Krylov subspace \(\mathcal{K}\). Obviously one gets a reduced matrix,
+								\begin{eqnarray}
+									U_{m}^{T}AU_{m} = H,
+								\end{eqnarray}
+								so that the Hessenberg matrix \(H\) is the orthogonal reduction of \(A\) on to the subspace \(\mathcal{K}\). 
+								The eigenvalue of \(H\) are then referred to as the Ritz values of \(A\). The idea is elegant and the iterative process is simple. 
+								However, one does not know what is a suitable subspace \(\mathcal{K}\) to begin with. An arbitrary subspace \(\mathcal{K}\) will generically not be invariant under \(A\).
+								Usually there is some procedure that refines the subspace so that it converges to what we want (a subspace spanned by \(m\) eigenvectors). 
+							</p>
+							<p>
+								The process is necessarily itirative. So the question arises, how good are the eigenvalue approximations when we don't have exact convergence rather, a slightly perturbed subspace. 
+								Afterall, the procedure would hardly be useful if you would only get good approximations of eigenvalues when the subspace converges to a tolerance of \(O(10^{-14})\) or something ridiculously small.
+								One does not have the patience for such accurate convergence! We want things done in Eye-ball norm, and I for one, wear some rather thick glasses. 
+							</p>
+
+							<p>
+								So we are going to look at this with an extreme example. Below I have two matrices
+								\begin{eqnarray}
+									A &=& 		\begin{bmatrix}
+													-0.8998+0.8i      		  &    0.000191667+0.000351119i	\\
+													0.000191667-0.000351119i  &    -0.8992+0.8i
+												\end{bmatrix}	\\
+									B &=& 		\begin{bmatrix}
+													-0.533963+0.961816i  & 0.0666914+0.797547i \\
+													-0.158485+0.121451i  &  -1.26504+0.638184i   
+												\end{bmatrix}												 
+								\end{eqnarray}
+								Don't focus too much on the numbers. They are not that important. Both \(A\) and \(B\) have the same spectrum, \(\sigma = \{\lambda_{1};\lambda_{2}\}=\{-0.9 + 0.8i; -0.899 + 0.8i\}\).
+								The difference lies in their eigenvectors. While \(A\) is a normal matrix, with orthogonal eigenvectors, \(B\) is a highly non-normal matrix.
+								Infact, the inner-product between the two eigenvectors of \(B\) is \( &lt v^{B}_{1},v^{B}_{2}&gt  = 0.9999995\). 
+								Yes, I know, it is a ridiculous number. But thats what I am going for.<br/>
+								Regardless of the degree of non-normality, the Rayleigh Quotient using an eigenvector will give us the corresponding eigenvalue. 
+								So, if we use \(Ra(v^{B}_{2},B) = (v^{B}_{2})^{T}Bv^{B}_{2} = \lambda_{2}\). But we are interested in the Rayleigh Quotient when we have a perturbed vector.
+								<i>i.e.</i> \(Ra(v^{B}_{2} + \Delta,B)\), where \(\Delta\) is a perturbation vector with a small norm. 
+								We take \(||\Delta|| &lt O(10^{-4})\) and look at it stochastically for both matrices \(A\) and \(B\).
+							</p>
+							<span class="image"><img style="margin-left:15%;" src="/pages/eigenvalues/images/normal.jpg" width=600px alt="" /> </span>
+							<span class="image"><img style="margin-left:15%;" src="/pages/eigenvalues/images/non_normal.jpg" width=600px alt="" /></span>
+							<p>
+								Now would you look at that! The normal matrix couldn't care less about our measly perturbation. It is made of strong stuff. 
+								Eyeball norm you say? You could bring your own microscope. We'll have to come up with something much bigger to move those eigenvalues. 
+								The plot on the right though...oh my...Like we sneezed in the direction of the matrix and it ran for cover. Stumbling on every peeble along the way.
+								Oh dear, good luck converging to even an eye-ball norm. Is there another way...?
+							</p>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.scrollex.min.js"></script>
+			<script src="/assets/js/jquery.scrolly.min.js"></script>
+			<script src="/assets/js/browser.min.js"></script>
+			<script src="/assets/js/breakpoints.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<script src="/assets/js/main.js"></script>
+			<!-- Mathjax scripts-->
+			<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+			<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+			
+
+
+	</body>
+</html>
